@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ست الكل · digital chef's guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Lateef&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="style-admin.css">
+            <link rel="stylesheet" href="style-auth.css">
+                <link rel="stylesheet" href="style-main.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-image"></div>
+        <div class="hero-overlay"></div>
+        <div class="scroll-indicator" onclick="document.getElementById('signin').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-chevron-down"></i>
+            <p data-i18n="hero.scrollDown">Scroll down to sign in</p>
+        </div>
+    </section>
+
+    <!-- Sign In Section -->
+    <section id="signin" class="signin-section">
+        <div class="signin-container">
+            <div class="welcome-message">
+                <div class="small-logo">
+                    <img src="logoo.png" alt="ست الكل logo">
+                </div>
+                <h2 class="arabic-title">ست الكل</h2>
+                <p data-i18n="hero.welcomeSub1">Welcome to your digital kitchen,</p><p data-i18n="hero.welcomeSub2">where tradition meets simplicity.</p>
+                <p data-i18n="hero.discoverSub1">Discover the art of Oriental cooking</p><p data-i18n="hero.discoverSub2">with clear, step-by-step recipes.</p>
+                <div class="quote">
+                    <i class="fas fa-quote-left"></i> طبخ زي الشيف <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+            <div class="signin-card">
+                <h3 data-i18n="hero.journeyTitle">Begin Your Culinary Journey</h3>
+                <div class="auth-buttons">
+                    <button class="auth-btn-large" id="signupBtn">
+                        <i class="fas fa-user-plus"></i> <span data-i18n="auth.signUpTitle">Sign Up</span>
+                    </button>
+                    <button class="auth-btn-large secondary" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> <span data-i18n="auth.loginTitle">Login</span>
+                    </button>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Main App -->
+    <div id="mainApp">
+        <div class="app-wrapper">
+            <!-- Taskbar -->
+            <div class="taskbar">
+                <div class="logo-area" id="logoHomeBtn" title="Go to Home">
+                    <div class="logo-icon">
+                        <img src="logoo.png" alt="ست الكل logo">
+                    </div>
+                    <span class="site-name arabic-title">ست الكل</span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="taskbar-search" id="taskbarSearchWrapper">
+                    <input type="text" class="taskbar-search-input" id="taskbarSearchInput" data-i18n-placeholder="nav.searchPlaceholder" placeholder="Search recipes…" autocomplete="off">
+                    <i class="fas fa-search taskbar-search-icon"></i>
+                    <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+                </div>
+
+                <div class="user-actions">
+                    <!-- Language Toggle -->
+
+
+                    <div class="favorites-container">
+                        <button class="favorites-btn" id="favoritesBtn">
+                            <i class="fas fa-heart"></i> <span data-i18n="nav.favorites">Favorites</span>
+                            <span class="favorites-count" id="favoritesCount">0</span>
+                        </button>
+                        <div class="favorites-dropdown" id="favoritesDropdown">
+                            <div class="favorites-header">
+                                <h3 data-i18n="favorites.title">Your Favorite Recipes</h3>
+                                <button class="clear-favorites" id="clearFavorites" data-i18n="favorites.clearAll">Clear all</button>
+                            </div>
+                            <div class="favorites-list" id="favoritesList">
+                                <div class="empty-favorites" data-i18n="favorites.empty">No favorites yet. Start saving recipes!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="auth-btn" id="mainSignupBtn"><i class="fas fa-user-plus"></i> <span data-i18n="nav.signUp">Sign up</span></button>
+                    <button class="auth-btn" id="mainLoginBtn"><i class="fas fa-sign-in-alt"></i> <span data-i18n="nav.login">Login</span></button>
+                    <button class="auth-btn" id="signOutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signOut">Sign Out</span></button>
+                    <button class="auth-btn orders-btn" id="myOrdersBtn" style="display: none;"><i class="fas fa-shopping-bag"></i> <span data-i18n="nav.myOrders">My Orders</span></button>
+                    <button class="cart-fab-btn" id="cartFabBtn" style="display:none;" title="View Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-fab-badge" id="cartBadge">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Panel (hidden by default) -->
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <div class="admin-header">
+                    <h2><i class="fas fa-crown"></i> <span data-i18n="admin.dashboard">Admin Dashboard</span></h2>
+                    <button class="close-admin" id="closeAdminBtn"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="categories" data-i18n="admin.categories">Categories</button>
+                    <button class="admin-tab" data-tab="recipes" data-i18n="admin.recipes">Recipes</button>
+                    <button class="admin-tab" data-tab="comments" data-i18n="admin.comments">Comments</button>
+                    <button class="admin-tab" data-tab="orders" data-i18n="admin.orders">Orders</button>
+                </div>
+                
+                <!-- Categories Management -->
+                <div id="adminCategories" class="admin-tab-content active">
+                    <div class="admin-actions">
+                        <button class="admin-action-btn" id="addCategoryBtn"><i class="fas fa-plus"></i> <span data-i18n="admin.addCategory">Add Category</span></button>
+                    </div>
+                    <div class="admin-list" id="categoriesList"></div>
+                </div>
+
+                <!-- Recipes Management -->
+                <div id="adminRecipes" class="admin-tab-content">
+                    <div class="admin-filters">
+                        <select id="recipeCategoryFilter">
+                            <option value="" data-i18n="categories.allCategories">All Categories</option>
+                        </select>
+                        <button class="admin-action-btn" id="addRecipeBtn"><i class="fas fa-plus"></i> <span data-i18n="admin.addRecipe">Add Recipe</span></button>
+                    </div>
+                    <div class="admin-list" id="recipesList"></div>
+                </div>
+
+                <!-- Comments Management -->
+                <div id="adminComments" class="admin-tab-content">
+                    <div class="admin-filters">
+                        <select id="commentRecipeFilter">
+                            <option value="" data-i18n="admin.allRecipes">All Recipes</option>
+                        </select>
+                    </div>
+                    <div class="admin-list" id="adminCommentsList"></div>
+                </div>
+
+                <!-- Orders Management -->
+                <div id="adminOrders" class="admin-tab-content">
+                    <div class="admin-filters">
+                        <select id="orderStatusFilter">
+                            <option value="" data-i18n="admin.allOrders">All Orders</option>
+                            <option value="pending">⏳ Pending</option>
+                            <option value="delivered">✅ Delivered</option>
+                            <option value="cancelled">❌ Cancelled</option>
+                        </select>
+                        <button class="admin-action-btn" id="refreshOrdersBtn"><i class="fas fa-sync-alt"></i> <span data-i18n="admin.refresh">Refresh</span></button>
+                    </div>
+                    <div class="admin-list" id="adminOrdersList"></div>
+                </div>
+            </div>
+
+            <!-- Category/Recipe Modals -->
+            <div id="categoryModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('categoryModal')">&times;</span>
+                    <h2 id="categoryModalTitle" data-i18n="admin.addCategoryTitle">Add Category</h2>
+                    <form id="categoryForm" onsubmit="event.preventDefault(); saveCategory();">
+                        <input type="hidden" id="categoryId">
+                        
+                        <label for="categoryName">Category Name:</label>
+                        <input type="text" id="categoryName" required>
+                        
+                        <label for="categoryIcon">Icon (Font Awesome class):</label>
+                        <input type="text" id="categoryIcon" value="fas fa-utensils" required>
+                        <small>e.g., fas fa-leaf, fas fa-candy-cane, fas fa-truck</small>
+                        
+                        <button type="submit" class="auth-btn-large">Save Category</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="recipeModal" class="modal">
+                <div class="modal-content recipe-modal">
+                    <span class="close" onclick="closeModal('recipeModal')">&times;</span>
+                    <h2 id="recipeModalTitle" data-i18n="admin.addRecipeTitle">Add Recipe</h2>
+                    <form id="recipeForm" onsubmit="event.preventDefault(); saveRecipe();">
+                        <input type="hidden" id="recipeId">
+                        <input type="hidden" id="recipeCategoryKey">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeName">Recipe Name:</label>
+                                <input type="text" id="recipeName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipeArabic">Arabic Name:</label>
+                                <input type="text" id="recipeArabic" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeCategory">Category:</label>
+                                <select id="recipeCategory" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipeTime">Prep Time:</label>
+                                <input type="text" id="recipeTime" value="30 min" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeDifficulty">Difficulty:</label>
+                                <select id="recipeDifficulty" required>
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipeServings">Servings:</label>
+                                <input type="text" id="recipeServings" value="4 servings" required>
+                            </div>
+                        </div>
+
+                        <!-- NEW CALORIE FIELDS -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeCalories">🔥 Calories (per serving):</label>
+                                <input type="number" id="recipeCalories" value="400" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipeProtein">💪 Protein (g):</label>
+                                <input type="number" id="recipeProtein" value="20" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeCarbs">🍚 Carbs (g):</label>
+                                <input type="number" id="recipeCarbs" value="40" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipeFats">🥑 Fats (g):</label>
+                                <input type="number" id="recipeFats" value="15" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipePrice">💰 Price per serving (EGP):</label>
+                                <input type="number" id="recipePrice" value="0" min="0" required>
+                            </div>
+                        </div>
+
+                        <label for="recipeDescription">Description:</label>
+                        <textarea id="recipeDescription" rows="3" required></textarea>
+
+                        <label for="recipeEmoji">Emoji:</label>
+                        <input type="text" id="recipeEmoji" value="🍽️" required>
+
+                        <label for="recipeImage">Recipe Image:</label>
+                        <div class="image-upload-wrapper">
+                            <input type="file" id="recipeImageFile" accept="image/*" style="display:none;">
+                            <input type="hidden" id="recipeImage">
+
+                            <!-- Drop Zone -->
+                            <div class="drop-zone" id="imageUploadArea">
+
+                                <!-- Empty state -->
+                                <div class="drop-zone-inner" id="uploadPlaceholder">
+                                    <div class="drop-zone-icon">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                    </div>
+                                    <p class="drop-zone-title">
+                                        You can drag and drop files here to add them.
+                                    </p>
+                                    <p class="drop-zone-hint">Supports JPG, PNG, JPEG</p>
+                                </div>
+
+                                <!-- Preview state -->
+                                <div class="drop-zone-preview" id="dropZonePreview" style="display:none;">
+                                    <img id="imagePreview" src="" alt="Preview">
+                                    <div class="drop-zone-preview-overlay">
+                                        <button type="button" class="drop-zone-change-btn" onclick="document.getElementById('recipeImageFile').click()">
+                                            <i class="fas fa-pencil-alt"></i> Change
+                                        </button>
+                                        <button type="button" class="drop-zone-remove-btn" id="imageRemoveBtn" onclick="removeRecipeImage()">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <label for="recipeTags">Tags (comma separated):</label>
+                        <input type="text" id="recipeTags" placeholder="Easy, Oriental, Quick" required>
+
+                        <label for="recipeIngredients">Ingredients (one per line):</label>
+                        <textarea id="recipeIngredients" rows="5" required></textarea>
+
+                        <label for="recipeInstructions">Instructions (one per line):</label>
+                        <textarea id="recipeInstructions" rows="8" required></textarea>
+
+                        <button type="submit" class="auth-btn-large">Save Recipe</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Welcome & Categories -->
+            <div class="categories-welcome" id="categoriesWelcome" data-i18n="categories.welcome">
+                ✨ Choose a category to begin your culinary journey ✨
+            </div>
+
+            <!-- Calorie Search - Collapsible -->
+<div class="calorie-search-wrapper" id="calorieSearchWrapper">
+    <button class="calorie-toggle-btn" id="calorieToggleBtn">
+        <i class="fas fa-fire-flame"></i>
+        <span data-i18n="calorie.searchByCalories">Search by Calories</span>
+        <i class="fas fa-chevron-down toggle-icon"></i>
+    </button>
+    
+    <div class="calorie-search-container" id="calorieSearchContainer" style="display: none;">
+        <div class="calorie-search-box">
+            <h3><i class="fas fa-fire-flame"></i> <span data-i18n="calorie.filterByCalories">Filter by Calories</span></h3>
+            <div class="calorie-range">
+                <div class="range-inputs">
+                    <div class="input-group">
+                        <label data-i18n="calorie.min">Min (kcal)</label>
+                        <input type="number" id="calorieMin" placeholder="0" value="0" min="0" step="1">
+                    </div>
+                    <span class="range-separator">—</span>
+                    <div class="input-group">
+                        <label data-i18n="calorie.max">Max (kcal)</label>
+                        <input type="number" id="calorieMax" placeholder="680" value="680" min="0" step="1">
+                    </div>
+                    <button id="applyCalorieFilter" class="calorie-filter-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button id="clearCalorieFilter" class="calorie-clear-btn">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+                <div class="calorie-hint">
+                    <i class="fas fa-info-circle"></i> 
+                    <span>Showing recipes with <span id="calorieRangeDisplay">0 - 680</span> calories</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="category-icons" id="categoryIcons">
+                <!-- Categories will be dynamically loaded -->
+            </div>
+
+            <!-- Back Button -->
+            <button class="back-button" id="backButton" style="display: none;">
+                <i class="fas fa-arrow-left"></i> <span data-i18n="categories.backToCategories">Back to Categories</span>
+            </button>
+
+            <!-- Categories Container -->
+            <div id="categoriesContainer"></div>
+
+            <!-- Recipe Detail Page -->
+            <div id="recipeDetailPage" class="recipe-detail-page">
+                <div class="detail-nav">
+                    <button class="back-to-category" id="backToCategoryBtn">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <div class="detail-actions">
+                        <button class="detail-favorite-btn" id="detailFavoriteBtn">
+                            <i class="far fa-heart"></i> <span data-i18n="recipe.addToFavorites">Add to Favorites</span>
+                        </button>
+                        <button class="detail-order-btn" id="detailOrderBtn">
+                            <i class="fas fa-shopping-bag"></i> <span data-i18n="recipe.orderThisMeal">Order This Meal</span>
+                            <span class="detail-order-price" id="detailOrderPrice"></span>
+                        </button>
+
+                        <!-- Admin recipe actions (hidden by default) -->
+                        <div class="admin-recipe-actions" id="adminRecipeActions" style="display: none;">
+                            <button class="detail-edit-btn" id="editRecipeBtn"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="detail-delete-btn" id="deleteRecipeBtn"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-header-section">
+                    <span class="detail-category-tag" id="detailCategory">Street Food</span>
+                    <h1 class="detail-title" id="detailTitle">Kebda (Liver Sandwich)</h1>
+                    <div class="detail-title-arabic" id="detailArabic">كبدة</div>
+                    <div class="detail-description" id="detailDescription">
+                        Spiced sautéed liver with peppers and onions, served in a soft roll. Bold flavors, pure street food energy.
+                    </div>
+                    <!-- NEW CALORIE CARD -->
+                    <div class="calorie-card" id="calorieCard">
+                        <div class="calorie-header">
+                            <i class="fas fa-fire-flame"></i>
+                            <span class="calorie-value" id="detailCalories">0</span>
+                            <span class="calorie-unit">kcal</span>
+                            <span class="per-serving" data-i18n="recipe.perServing">per serving</span>
+                        </div>
+                        <div class="macro-row">
+                            <div class="macro-item protein">
+                                <i class="fas fa-dumbbell"></i>
+                                <span class="macro-label" data-i18n="recipe.protein">Protein</span>
+                                <span class="macro-value" id="detailProtein">0</span>
+                                <span class="macro-unit">g</span>
+                            </div>
+                            <div class="macro-item carbs">
+                                <i class="fas fa-bread-slice"></i>
+                                <span class="macro-label" data-i18n="recipe.carbs">Carbs</span>
+                                <span class="macro-value" id="detailCarbs">0</span>
+                                <span class="macro-unit">g</span>
+                            </div>
+                            <div class="macro-item fats">
+                                <i class="fas fa-oil-can"></i>
+                                <span class="macro-label" data-i18n="recipe.fats">Fats</span>
+                                <span class="macro-value" id="detailFats">0</span>
+                                <span class="macro-unit">g</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-tags" id="detailTags"></div>
+                <div class="detail-meta" id="detailMeta">
+                    <span class="meta-item"><i class="far fa-clock"></i> <span id="detailTime">15 min</span></span>
+                    <span class="meta-item"><i class="fas fa-utensils"></i> <span id="detailServings">4 servings</span></span>
+                    <span class="meta-item"><i class="fas fa-chart-line"></i> <span id="detailDifficulty">Easy</span></span>
+                </div>
+                <div class="ingredients-section">
+                    <h2 class="section-title" data-i18n="recipe.ingredients">Ingredients</h2>
+                    <ul class="ingredients-list" id="ingredientsList"></ul>
+                </div>
+                <div class="instructions-section">
+                    <h2 class="section-title" data-i18n="recipe.instructions">Instructions</h2>
+                    <ol class="instructions-list" id="instructionsList"></ol>
+                </div>
+                <div class="comments-section">
+                    <div class="comments-header">
+                        <h2 class="comments-title" data-i18n="comments.title">Comments</h2>
+                        <span class="comment-count" id="commentCount">0 <span data-i18n="comments.title">comments</span></span>
+                    </div>
+                    <div class="comment-form" id="commentForm">
+                        <textarea data-i18n-placeholder="comments.placeholder" placeholder="Share your thoughts about this recipe..."></textarea>
+                        <div class="comment-form-footer">
+                            <div class="login-prompt" id="loginPrompt">
+                                <a href="#" id="signInToComment" data-i18n="comments.signIn">Sign in</a> <span data-i18n="comments.signInPrompt">to leave a comment</span>
+                            </div>
+                            <button class="auth-btn" id="postCommentBtn" style="display: none;" data-i18n="comments.postComment">Post Comment</button>
+                        </div>
+                    </div>
+                    <div class="comments-list" id="commentsList">
+                        <!-- Comments will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+            <footer data-i18n="footer">👩‍🍳 ست الكل — clear, structured recipes, just like a digital chef</footer>
+        </div>
+    </div>
+
+    <!-- Sticky Add to Cart bar (fixed bottom, shown when recipe detail is open) -->
+    <div class="sticky-cart-bar" id="stickyCartBar" style="display:none;">
+        <div class="sticky-cart-bar-inner">
+            <button class="sticky-cart-btn" id="detailAddToCartBtn" data-tip="Add to Cart">
+                <i class="fas fa-cart-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 data-i18n="auth.signUpTitle">Sign Up</h2>
+            <form id="signupForm" onsubmit="event.preventDefault(); handleSignup();">
+                <label for="signupName" data-i18n="auth.name">Name:</label>
+                <input type="text" id="signupName" required>
+                <span id="signupNameError" class="error"></span>
+
+                <label for="signupEmail" data-i18n="auth.email">Email:</label>
+                <input type="email" id="signupEmail" required>
+                <span id="signupEmailError" class="error"></span>
+
+                <label for="signupPhone" data-i18n="auth.phone">Phone (optional):</label>
+                <input type="text" id="signupPhone">
+                <span id="signupPhoneError" class="error"></span>
+
+                <label for="signupPassword" data-i18n="auth.password">Password (min 6 characters):</label>
+                <input type="password" id="signupPassword" required>
+                <span id="signupPasswordError" class="error"></span>
+
+                <label for="signupConfirm" data-i18n="auth.confirmPassword">Password Confirm:</label>
+                <input type="password" id="signupConfirm" required>
+                <span id="signupConfirmError" class="error"></span>
+
+                <button type="submit" class="auth-btn-large" data-i18n="auth.createAccount">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 data-i18n="auth.loginTitle">Login</h2>
+            <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                <label for="loginEmail" data-i18n="auth.email">Email:</label>
+                <input type="email" id="loginEmail" required>
+                <span id="loginEmailError" class="error"></span>
+
+                <label for="loginPassword" data-i18n="auth.password">Password:</label>
+                <input type="password" id="loginPassword" required>
+                <span id="loginPasswordError" class="error"></span>
+
+                <button type="submit" class="auth-btn-large" data-i18n="auth.logIn">Log In</button>
+            </form>
+        </div>
+    </div>
+
+<!-- ===== ORDER MODAL ===== -->
+<div id="orderModal" class="modal">
+    <div class="modal-content order-modal-content">
+        <span class="close" onclick="closeModal('orderModal')">&times;</span>
+        <div class="order-modal-header">
+            <div class="order-modal-icon" id="orderModalEmoji">🍽️</div>
+            <div>
+                <h2 data-i18n="order.title">Order This Meal</h2>
+                <p class="order-modal-recipe-name" id="orderModalRecipeName"></p>
+                <p class="order-modal-calories" id="orderModalCalories"></p>
+            </div>
+        </div>
+
+        <div id="orderFormWrapper">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="orderServings"><i class="fas fa-utensils"></i> <span data-i18n="order.servings">Number of Servings</span></label>
+                    <input type="number" id="orderServings" value="1" min="1" max="20">
+                </div>
+                <div class="form-group">
+                    <label for="orderPhone"><i class="fas fa-phone"></i> <span data-i18n="order.phone">Phone Number *</span></label>
+                    <input type="tel" id="orderPhone" placeholder="e.g. 01012345678">
+                    <span id="orderPhoneError" class="error"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="orderAddress"><i class="fas fa-map-marker-alt"></i> <span data-i18n="order.address">Delivery Address *</span></label>
+                <textarea id="orderAddress" rows="2" placeholder="Enter your full delivery address..."></textarea>
+                <span id="orderAddressError" class="error"></span>
+            </div>
+
+            <div class="save-details-row">
+                <label class="save-details-label">
+                    <input type="checkbox" id="orderSaveDetails">
+                    <i class="fas fa-save"></i> Save phone &amp; address to my account
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="orderNotes"><i class="fas fa-sticky-note"></i> <span data-i18n="order.notes">Special Notes (optional)</span></label>
+                <textarea id="orderNotes" rows="2" placeholder="Any special instructions, allergies, preferences..."></textarea>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-group">
+                <label class="payment-method-label" data-i18n="order.paymentMethod">PAYMENT METHOD</label>
+                <div class="payment-cod-box">
+                    <span class="payment-cod-icon">💵</span>
+                    <span class="payment-cod-text"><span data-i18n="order.payOnDelivery">Pay on Delivery</span> <span class="payment-cash-badge" data-i18n="order.cash">Cash</span></span>
+                    <span class="payment-cod-radio"><i class="fas fa-circle"></i></span>
+                </div>
+                <input type="hidden" name="paymentMethod" value="cash">
+            </div>
+
+            <!-- Price Summary -->
+            <div class="order-price-summary" id="orderPriceSummary">
+                <div class="price-row">
+                    <span data-i18n="order.pricePerServing">Price per serving</span>
+                    <span id="pricePerServing">— EGP</span>
+                </div>
+                <div class="price-row">
+                    <span>Servings</span>
+                    <span id="priceSummaryServings">×1</span>
+                </div>
+                <div class="price-row">
+                    <span data-i18n="order.deliveryFee">Delivery fee</span>
+                    <span>20 EGP</span>
+                </div>
+                <div class="price-row price-total">
+                    <span data-i18n="order.total">Total</span>
+                    <span id="priceTotalDisplay">— EGP</span>
+                </div>
+            </div>
+
+            <button class="auth-btn-large order-submit-btn" id="placeOrderBtn" onclick="placeOrder()">
+                <i class="fas fa-check-circle"></i> <span data-i18n="order.confirm">Confirm Order</span>
+            </button>
+        </div>
+
+        <!-- Success state -->
+        <div id="orderSuccessMsg" style="display:none;" class="order-success">
+            <div class="order-success-icon">🎉</div>
+            <h3 data-i18n="order.successTitle">Order Placed!</h3>
+            <p>Your order for <strong id="orderSuccessName"></strong> has been received.</p>
+            <p class="order-success-sub">We'll prepare it with love. Track it in <strong>My Orders</strong>.</p>
+            <button class="auth-btn-large" onclick="closeModal('orderModal')" data-i18n="order.close">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MY ORDERS MODAL ===== -->
+<div id="myOrdersModal" class="modal">
+    <div class="modal-content my-orders-modal-content">
+        <span class="close" onclick="closeModal('myOrdersModal')">&times;</span>
+        <h2><i class="fas fa-shopping-bag"></i> <span data-i18n="nav.myOrders">My Orders</span></h2>
+        <div id="myOrdersList" class="my-orders-list">
+            <div class="empty-favorites" data-i18n="order.loading">Loading your orders...</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== SHOPPING CART MODAL ===== -->
+<div id="cartModal" class="modal">
+    <div class="modal-content cart-modal-content">
+        <div class="cart-modal-header">
+            <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+            <div class="cart-header-right">
+                <span class="cart-item-count" id="cartItemCount">0 items</span>
+                <span class="close" onclick="closeModal('cartModal')">&times;</span>
+            </div>
+        </div>
+        <div id="cartItemsList" class="cart-items-list"></div>
+        <div class="cart-checkout-panel" id="cartCheckoutPanel" style="display:none;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cartPhone"><i class="fas fa-phone"></i> Phone Number *</label>
+                    <input type="tel" id="cartPhone" placeholder="e.g. 01012345678">
+                    <span id="cartPhoneError" class="error"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cartAddress"><i class="fas fa-map-marker-alt"></i> Delivery Address *</label>
+                <textarea id="cartAddress" rows="2" placeholder="Enter your full delivery address..."></textarea>
+                <span id="cartAddressError" class="error"></span>
+            </div>
+            <div class="save-details-row">
+                <label class="save-details-label">
+                    <input type="checkbox" id="cartSaveDetails">
+                    <i class="fas fa-save"></i> Save phone &amp; address to my account
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="cartNotes"><i class="fas fa-sticky-note"></i> Special Notes (optional)</label>
+                <textarea id="cartNotes" rows="2" placeholder="Any special instructions..."></textarea>
+            </div>
+            <div class="cart-price-summary">
+                <div class="cart-summary-row"><span>Subtotal</span><span id="cartSubtotal">0 EGP</span></div>
+                <div class="cart-summary-row"><span>Delivery fee</span><span>20 EGP</span></div>
+                <div class="cart-summary-row cart-summary-total"><span>Total</span><span id="cartTotal">0 EGP</span></div>
+            </div>
+            <button class="auth-btn-large order-submit-btn" id="cartCheckoutBtn">
+                <i class="fas fa-check-circle"></i> Place Order
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== COOKING ANIMATION MODAL ===== -->
+<div id="cookingModal" class="modal cooking-modal-overlay" style="display:none;">
+    <div class="cooking-modal-box">
+        <div class="cooking-scene">
+            <div class="cooking-fire">
+                <div class="flame flame-l"></div>
+                <div class="flame flame-c"></div>
+                <div class="flame flame-r"></div>
+            </div>
+            <div class="cooking-pan">
+                <div class="pan-handle-bar"></div>
+                <div class="pan-food" id="cookingEmoji">🍳</div>
+                <div class="steam st1"></div>
+                <div class="steam st2"></div>
+                <div class="steam st3"></div>
+            </div>
+            <div class="cooking-sparks">
+                <span class="sp sp1">✦</span><span class="sp sp2">·</span>
+                <span class="sp sp3">✦</span><span class="sp sp4">·</span>
+            </div>
+        </div>
+        <h3 class="cooking-title" id="cookingTitle">Preparing your order…</h3>
+        <p class="cooking-sub" id="cookingSub">The kitchen is working its magic 🔥</p>
+        <div class="cooking-bar"><div class="cooking-fill" id="cookingFill"></div></div>
+        <div class="cooking-items" id="cookingItems"></div>
+        <button class="cooking-done-btn" id="cookingDoneBtn" style="display:none;" onclick="closeCookingModal()">
+            <i class="fas fa-check"></i> Got it!
+        </button>
+    </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="requests.js"></script>
+<script src="app.js"></script>
+<script src="admin.js"></script>
+<script src="cart.js"></script>
+<script>
+    // Initialize i18n as soon as DOM is ready
+    document.addEventListener('DOMContentLoaded', () => i18n.init());
+</script>
+</body>
+</html>
