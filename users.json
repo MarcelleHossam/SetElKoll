@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1779638823391,
+    "name": "Ahmed",
+    "email": "mody632006@gmail.com",
+    "password": "123456",
+    "phone": "",
+    "favorites": [
+      {
+        "name": "Golash",
+        "category": "Oriental"
+      }
+    ],
+    "createdAt": "2026-05-24T16:07:03.392Z"
+  },
+  {
+    "id": 1779639010589,
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "123456",
+    "phone": "",
+    "favorites": [],
+    "createdAt": "2026-05-24T16:10:10.589Z"
+  }
+]
