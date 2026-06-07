@@ -1,0 +1,1331 @@
+/* =====================================================
+   style-auth.css
+   ──────────────────────────────────────────────────
+   Covers:
+     • CSS Reset & base body styles
+     • Arabic font styles
+     • Hero section (landing page)
+     • Sign-in section & sign-in card
+     • Auth buttons (large — hero + modals)
+     • Modal shell (all modals share this)
+     • Login modal specifics
+     • Sign-up modal specifics (all responsive variants)
+     • Password show/hide toggle
+     • Form validation states
+     • Scrollbar styling (global)
+     • Modal-over-taskbar z-index fix
+
+  
+
+/* ========== RESET & BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+}
+
+body {
+    background-color: #faf7f2;
+    color: #2e241f;
+    min-height: 100vh;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ========== ARABIC FONT STYLES ========== */
+.arabic-title, 
+.site-name, 
+.welcome-message h2,
+.quote {
+    font-family: 'Amiri', 'Scheherazade New', 'Lateef', 'Traditional Arabic', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.welcome-message h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #000000;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.site-name {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: 1px;
+}
+
+.quote {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #000000;
+}
+
+/* ========== HERO SECTION ========== */
+.hero-section {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8eabe;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('logoo.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(248, 234, 190, 0.1), rgba(248, 234, 190, 0.3));
+    z-index: 2;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+    color: #6b3f2b;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+    40% { transform: translateY(-30px) translateX(-50%); }
+    60% { transform: translateY(-15px) translateX(-50%); }
+}
+
+.scroll-indicator i {
+    font-size: 3rem;
+    color: #c97e4d;
+    text-shadow: 0 2px 10px rgba(248, 234, 190, 0.8);
+}
+
+.scroll-indicator p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 10px;
+    background-color: rgba(248, 234, 190, 0.9);
+    padding: 8px 20px;
+    border-radius: 40px;
+    backdrop-filter: blur(4px);
+    color: #5c3b28;
+}
+
+/* ========== SIGN IN SECTION ========== */
+.signin-section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #faf7f2;
+}
+
+.signin-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.welcome-message {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    padding: 30px;
+}
+
+.small-logo {
+    margin-bottom: 30px;
+}
+
+.small-logo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffd8b0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.welcome-message h2 {
+    font-size: 3rem;
+    color: #6b3f2b;
+    margin-bottom: 15px;
+}
+
+.welcome-message p {
+    font-size: 1.3rem;
+    color: #7a5a44;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.welcome-message .quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #b45f2e;
+    border-top: 2px dashed #e4c2a2;
+    padding-top: 20px;
+}
+
+.signin-card {
+    flex: 1;
+    min-width: 400px;
+    background-color: #fffcf7;
+    border-radius: 70px 20px 70px 20px;
+    padding: 50px 40px;
+    box-shadow: 0 30px 50px rgba(100, 60, 30, 0.2);
+    border: 3px solid #ffd8b0;
+}
+
+.signin-card h3 {
+    font-size: 2.2rem;
+    color: #4a2f1f;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.auth-btn-large {
+    background-color: #ffd8b0;
+    border: none;
+    padding: 18px 35px;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #3f2c1e;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #ca9f7c;
+    transition: 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 2px solid #fff3e6;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.auth-btn-large i {
+    font-size: 1.5rem;
+    color: #965d3b;
+}
+
+.auth-btn-large:active {
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 #ca9f7c;
+}
+
+.auth-btn-large.secondary {
+    background-color: #fff3e6;
+    color: #5c3b28;
+    box-shadow: 0 8px 0 #e6c9b0;
+}
+
+.auth-btn-large.secondary i {
+    color: #b8764b;
+}
+
+.admin-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px dashed #e4c2a2;
+}
+
+.admin-link a {
+    color: #b45f2e;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 25px;
+    display: inline-block;
+    background-color: #faf0e6;
+    border-radius: 40px;
+}
+
+.admin-link a:hover {
+    background-color: #ffd8b0;
+}
+
+/* ========== MODAL STYLES ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fffcf7;
+    margin: auto;
+    padding: 30px;
+    border-radius: 60px 20px 60px 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 3px solid #ffd8b0;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #b45f2e;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ff4d4d;
+}
+
+.modal h2 {
+    color: #4a2f1f;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal label {
+    font-weight: 600;
+    color: #4a2f1f;
+}
+
+.modal input {
+    padding: 12px 15px;
+    border: 2px solid #ffd8b0;
+    border-radius: 40px;
+    font-size: 1rem;
+    background-color: #fff3e6;
+}
+
+.modal input:focus {
+    outline: none;
+    border-color: #ffb77a;
+    background-color: white;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: -8px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+}
+
+/* ========== PASSWORD SHOW/HIDE TOGGLE - FIXED ========== */
+.password-field-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.password-field-wrapper input {
+    width: 100%;
+    padding: 12px 45px 12px 15px !important;
+    border: 2px solid #ffd8b0 !important;
+    border-radius: 40px !important;
+    font-size: 1rem !important;
+    background-color: #fff3e6 !important;
+    box-sizing: border-box !important;
+    height: 48px !important;
+}
+
+.password-field-wrapper input:focus {
+    outline: none !important;
+    border-color: #ffb77a !important;
+    background-color: white !important;
+}
+
+.password-toggle-btn {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: none !important;
+    border: none !important;
+    color: #c97e4d !important;
+    cursor: pointer !important;
+    font-size: 1.2rem !important;
+    padding: 5px !important;
+    width: 30px !important;
+    height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    border-radius: 50% !important;
+}
+
+.password-toggle-btn:hover {
+    color: #b45f2e !important;
+    background-color: rgba(255, 216, 176, 0.3) !important;
+}
+
+/* Modal specific fixes */
+.modal .password-field-wrapper {
+    margin-bottom: 15px;
+}
+
+.modal .password-field-wrapper input {
+    margin-bottom: 0;
+}
+
+/* Error message spacing */
+.modal .password-field-wrapper + .error {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
+}
+/* ========== FIX FOR FAVORITES DROPDOWN OVERLAP ========== */
+.favorites-container {
+    position: relative;
+    display: inline-block;
+}
+
+.favorites-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 20px;
+    min-width: 300px;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 9999;
+    display: none;
+    border: 2px solid #ffd8b0;
+}
+
+.favorites-dropdown.show {
+    display: block;
+}
+
+
+.user-actions {
+    position: relative;
+    z-index: 101;
+}
+
+/* Make sure the favorites button doesn't get hidden */
+.favorites-btn {
+    position: relative;
+    z-index: 102;
+}
+
+/* Adjust spacing in taskbar for better alignment */
+.taskbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Ensure dropdown appears above everything */
+.favorites-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+}
+
+/* Fix for mobile responsiveness */
+@media (max-width: 768px) {
+    .favorites-dropdown {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 350px;
+        max-height: 80vh;
+        z-index: 10000;
+    }
+    
+    .taskbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .user-actions {
+        justify-content: center;
+    }
+}
+
+/* Make sure the dropdown doesn't get cut off */
+.favorites-dropdown {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Style for empty favorites message */
+.empty-favorites {
+    text-align: center;
+    color: #ab8a70;
+    padding: 20px;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+/* Ensure proper spacing in the favorites list */
+.favorites-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.favorite-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f5deca;
+    gap: 10px;
+}
+
+.favorite-info {
+    flex: 1;
+    min-width: 0; /* Prevents text overflow */
+}
+
+.favorite-name {
+    font-weight: 600;
+    color: #4a2f1f;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.favorite-category {
+    font-size: 0.8rem;
+    color: #b45f2e;
+    display: block;
+}
+/* ========== FIX FOR SIGNUP MODAL SIZE AND SCROLLING ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #fffcf7;
+    margin: auto;
+    padding: 30px;
+    border-radius: 60px 20px 60px 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 3px solid #ffd8b0;
+    position: relative;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Sign Up modal specific adjustments */
+#signupModal .modal-content {
+    max-width: 500px;
+    width: 95%;
+}
+
+/* Make form scrollable if content is too long */
+#signupModal form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: calc(80vh - 100px);
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ffd8b0 #fff3e6;
+}
+
+/* Custom scrollbar for webkit browsers */
+#signupModal form::-webkit-scrollbar {
+    width: 8px;
+}
+
+#signupModal form::-webkit-scrollbar-track {
+    background: #fff3e6;
+    border-radius: 10px;
+}
+
+#signupModal form::-webkit-scrollbar-thumb {
+    background: #ffd8b0;
+    border-radius: 10px;
+}
+
+#signupModal form::-webkit-scrollbar-thumb:hover {
+    background: #c97e4d;
+}
+
+/* Adjust spacing for better fit */
+#signupModal .modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+#signupModal label {
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+#signupModal input {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+#signupModal .password-field-wrapper {
+    margin-bottom: 5px;
+}
+
+#signupModal .error {
+    font-size: 0.8rem;
+    margin-top: -8px;
+    margin-bottom: 8px;
+}
+
+#signupModal .auth-btn-large {
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 1.2rem;
+}
+
+/* Close button positioning */
+#signupModal .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    z-index: 10;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-height: 700px) {
+    #signupModal .modal-content {
+        padding: 20px;
+    }
+    
+    #signupModal form {
+        gap: 8px;
+    }
+    
+    #signupModal input {
+        padding: 8px 12px;
+    }
+    
+    #signupModal h2 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-height: 600px) {
+    #signupModal .modal-content {
+        padding: 15px;
+    }
+    
+    #signupModal form {
+        max-height: calc(85vh - 80px);
+    }
+    
+    #signupModal label {
+        font-size: 0.9rem;
+    }
+    
+    #signupModal input {
+        padding: 6px 10px;
+    }
+    
+    #signupModal .auth-btn-large {
+        padding: 10px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    #signupModal .modal-content {
+        padding: 20px 15px;
+    }
+    
+    #signupModal h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Ensure password toggle buttons are properly positioned */
+#signupModal .password-toggle-btn {
+    right: 10px;
+}
+
+/* Make sure the form is always visible and scrollable */
+#signupModal form {
+    max-height: 70vh;
+}
+
+/* Fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    #signupModal .modal-content {
+        max-height: -webkit-fill-available;
+    }
+}
+/* ========== FIX FOR CREATE ACCOUNT BUTTON VISIBILITY ========== */
+#signupModal {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#signupModal .modal-content {
+    background-color: #fffcf7;
+    margin: 0 auto;
+    padding: 30px 30px 35px 30px;
+    border-radius: 60px 20px 60px 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 3px solid #ffd8b0;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+}
+
+#signupModal h2 {
+    color: #4a2f1f;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 2.2rem;
+    padding-right: 0;
+}
+
+#signupModal form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+#signupModal label {
+    font-weight: 600;
+    color: #4a2f1f;
+    margin-bottom: -10px;
+    font-size: 1rem;
+    display: block;
+}
+
+#signupModal input {
+    padding: 14px 18px;
+    border: 2px solid #ffd8b0;
+    border-radius: 50px;
+    font-size: 1rem;
+    background-color: #fff3e6;
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+    margin: 0;
+}
+
+#signupModal .password-field-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0;
+}
+
+#signupModal .password-field-wrapper input {
+    padding-right: 50px;
+    margin: 0;
+}
+
+#signupModal .password-toggle-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #c97e4d;
+    cursor: pointer;
+    font-size: 1.3rem;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#signupModal .error {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: -15px;
+    margin-bottom: 0;
+    padding-left: 15px;
+    display: block;
+}
+
+#signupModal .auth-btn-large {
+    background-color: #ffd8b0;
+    border: none;
+    padding: 16px 20px;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #3f2c1e;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #ca9f7c;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 2px solid #fff3e6;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0;
+    position: relative;
+    bottom: auto;
+    height: auto;
+    min-height: 60px;
+    line-height: 1.2;
+}
+
+#signupModal .auth-btn-large:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #ca9f7c;
+}
+
+#signupModal .auth-btn-large:hover {
+    background-color: #ffcba0;
+}
+
+#signupModal .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #b45f2e;
+    cursor: pointer;
+    z-index: 20;
+    line-height: 1;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure all fields are consistent */
+#signupModal input:focus {
+    outline: none;
+    border-color: #ffb77a;
+    background-color: white;
+}
+
+/* Remove any max-height restrictions */
+#signupModal .modal-content,
+#signupModal form {
+    max-height: none;
+    overflow: visible;
+}
+
+/* Make it match Login modal exactly */
+#loginModal .modal-content {
+    max-width: 450px;
+    padding: 30px 30px 35px 30px;
+}
+
+#loginModal .auth-btn-large {
+    padding: 16px 20px;
+    font-size: 1.3rem;
+    margin-top: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-height: 700px) {
+    #signupModal .modal-content {
+        padding: 25px 25px 30px 25px;
+    }
+    
+    #signupModal h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    
+    #signupModal form {
+        gap: 15px;
+    }
+    
+    #signupModal input {
+        padding: 12px 16px;
+    }
+    
+    #signupModal .auth-btn-large {
+        padding: 14px 18px;
+        font-size: 1.2rem;
+        min-height: 55px;
+    }
+}
+
+@media (max-height: 600px) {
+    #signupModal .modal-content {
+        padding: 20px 20px 25px 20px;
+    }
+    
+    #signupModal h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    #signupModal form {
+        gap: 12px;
+    }
+    
+    #signupModal input {
+        padding: 10px 14px;
+    }
+    
+    #signupModal label {
+        font-size: 0.95rem;
+        margin-bottom: -8px;
+    }
+    
+    #signupModal .auth-btn-large {
+        padding: 12px 16px;
+        font-size: 1.1rem;
+        min-height: 50px;
+        margin-top: 5px;
+    }
+    
+    #signupModal .error {
+        margin-top: -12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* For very small screens */
+@media (max-height: 500px) {
+    #signupModal {
+        padding: 10px;
+        overflow-y: auto;
+    }
+    
+    #signupModal .modal-content {
+        transform: none;
+        top: 0;
+        margin: 10px auto;
+        padding: 15px;
+    }
+    
+    #signupModal h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    #signupModal form {
+        gap: 8px;
+    }
+    
+    #signupModal input {
+        padding: 8px 12px;
+    }
+    
+    #signupModal .auth-btn-large {
+        padding: 10px 12px;
+        font-size: 1rem;
+        min-height: 45px;
+        box-shadow: 0 4px 0 #ca9f7c;
+    }
+}
+
+/* Width-based responsiveness */
+@media (max-width: 500px) {
+    #signupModal .modal-content,
+    #loginModal .modal-content {
+        width: 100%;
+        padding: 25px 20px 30px 20px;
+    }
+    
+    #signupModal h2,
+    #loginModal h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Ensure button is always fully visible */
+#signupModal .auth-btn-large {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+    pointer-events: auto;
+}
+/* ========== FIX FOR PASSWORD TOGGLE BUTTON ========== */
+.password-field-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.password-field-wrapper input {
+    width: 100%;
+    padding: 14px 50px 14px 18px !important;
+    border: 2px solid #ffd8b0;
+    border-radius: 50px;
+    font-size: 1rem;
+    background-color: #fff3e6;
+    box-sizing: border-box;
+    height: auto;
+    margin: 0;
+}
+
+.password-field-wrapper input:focus {
+    outline: none;
+    border-color: #ffb77a;
+    background-color: white;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #c97e4d;
+    cursor: pointer;
+    font-size: 1.3rem;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+}
+
+.password-toggle-btn:hover {
+    color: #b45f2e;
+    background-color: rgba(255, 216, 176, 0.3);
+}
+
+.password-toggle-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.password-toggle-btn i {
+    pointer-events: none;
+    font-size: 1.3rem;
+}
+
+/* Modal specific styles */
+.modal .password-field-wrapper {
+    margin-bottom: 15px;
+}
+
+.modal .password-field-wrapper input {
+    background-color: #fff3e6;
+}
+
+/* Error message spacing */
+.password-field-wrapper + .error {
+    margin-top: -12px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+/* ========== CUSTOM SCROLLBAR STYLING ========== */
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff3e6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c97e4d;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b45f2e;
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c97e4d #fff3e6;
+}
+/* ========== FORM VALIDATION STYLES ========== */
+
+/* Highlight invalid fields */
+.modal input.invalid,
+.modal textarea.invalid {
+    border-color: #ff4d4d !important;
+    background-color: #fff0f0 !important;
+}
+
+/* Success state for valid fields */
+.modal input.valid,
+.modal textarea.valid {
+    border-color: #4CAF50 !important;
+}
+
+/* Validation hint text */
+.validation-hint {
+    font-size: 0.8rem;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+.validation-hint.error {
+    color: #ff4d4d;
+}
+
+.validation-hint.success {
+    color: #4CAF50;
+}
+
+.validation-hint.info {
+    color: #c97e4d;
+}
+
+/* Real-time validation styling for recipe form fields */
+#recipeName:invalid,
+#recipeArabic:invalid {
+    border-color: #ff4d4d;
+}
+
+
+
+/* Field instruction text */
+.field-instruction {
+    display: block;
+    font-size: 0.75rem;
+    color: #ab8a70;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+.field-instruction i {
+    margin-right: 5px;
+    font-size: 0.7rem;
+}
+
+/* Arabic text direction for Arabic name field */
+#recipeArabic {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Amiri', 'Scheherazade New', serif;
+}
+
+/* ========== FIXED VALIDATION STYLES ========== */
+
+/* Improved form validation styling */
+.modal input.invalid,
+.modal textarea.invalid,
+.modal select.invalid {
+    border-color: #ff4d4d !important;
+    background-color: #fff0f0 !important;
+}
+
+.modal input.valid,
+.modal textarea.valid,
+.modal select.valid {
+    border-color: #4CAF50 !important;
+}
+
+/* Field instruction text */
+.field-instruction {
+    display: block;
+    font-size: 0.75rem;
+    color: #ab8a70;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+.field-instruction i {
+    margin-right: 5px;
+    font-size: 0.7rem;
+}
+
+/* Arabic text direction for Arabic name field */
+#recipeArabic {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Amiri', 'Scheherazade New', serif;
+}
+
+/* Real-time validation feedback */
+.field-error {
+    color: #ff4d4d;
+    font-size: 0.75rem;
+    margin-top: -5px;
+    margin-bottom: 8px;
+    padding-left: 15px;
+    display: block;
+}
+
+.field-success {
+    color: #4CAF50;
+    font-size: 0.75rem;
+    margin-top: -5px;
+    margin-bottom: 8px;
+    padding-left: 15px;
+    display: block;
+}
+
+/* ========== FIX FOR MODAL OVERLAPPING TASKBAR ========== */
+
+/* Make modal appear above everything */
+.modal {
+    z-index: 9999999 !important;
+}
+
+/* Add top margin to modal content so it doesn't hide under taskbar */
+.modal-content {
+    margin: 100px auto 20px auto !important;
+}
+
+/* For the larger recipe modal */
+.recipe-modal {
+    margin: 100px auto 20px auto !important;
+}
+
+/* Make close button more visible and accessible */
+.modal .close {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #b45f2e;
+    cursor: pointer;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.modal .close:hover {
+    color: #ff4d4d;
+    background: #fff0e6;
+    transform: scale(1.1);
+}
+
+/* For mobile screens */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 80px auto 20px auto !important;
+        width: 95% !important;
+    }
+    
+    .recipe-modal {
+        margin: 80px auto 20px auto !important;
+    }
+}
